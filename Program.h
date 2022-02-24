@@ -1,7 +1,5 @@
 #pragma once
 #include "User.h"
-#include "Chat.h"
-#include "Message.h"
 #include <string>
 #include <iostream>
 using namespace std;
@@ -12,16 +10,16 @@ class Program : public User
 private:
 
 	User* _currentUser = nullptr;
-	User* _users;
-	int _programLength = 3;
-	bool _chatIsON = true;
+	
+	User* _users;             //ссылка на динамический массив, созданный в конструкторе 
+	int _programLength = 3;   //длинна массива (по умолчанию 3 юзера для отладки)
+	bool _chatIsON = true;  
 
 public:
 
 								///Конструкторы
 
 	Program();
-	//~Program();
 
 								/// Сеттеры
 
@@ -47,11 +45,9 @@ public:
 	void userMenu();
 	void addUser();
 
-	                              //manual
+	void addMessageM(string from, string to, string message, int index); // Для отладки
 
-	void addMessageM(string from, string to, string message, int index);
-	void registrationM(string log, string pas, string name);
-	void loginM(string login);
+	
 	
 };
 

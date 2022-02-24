@@ -1,5 +1,5 @@
 #include "Program.h"
-
+#include <cstdlib>
 																								///Конструкторы
 
 Program::Program()
@@ -7,10 +7,6 @@ Program::Program()
 	_users = new User[_programLength];
 }
 
-//Program::~Program()
-//{
-//	delete[] _users;
-//}
 
 																								/// Сеттеры
 
@@ -20,11 +16,6 @@ void Program::setUser(string log, string pas, string name, int index)
 
 }
 
-//void Program::setUser(string log, string pas, string name, )
-//{
-//	_users[index].setUser(log, pas, name);
-//
-//}
 
 void Program::setStatusOFF()
 {
@@ -43,6 +34,8 @@ User* Program::getUserByLogin(string login)
 		}
 		
 	}
+
+	return nullptr;
 }
 
 User* Program::getUserByName(string name)
@@ -55,6 +48,7 @@ User* Program::getUserByName(string name)
 		}	
 		
 	}
+
 	return nullptr;
 
 }
@@ -75,10 +69,20 @@ void Program::addMessage( string to, string message)
 {
 	string from = _currentUser->getName();
 	
-	User* user_ptr = getUserByName(to);
-	
+	if (to == "all")
+	{
+		for (int i = 0; i < _programLength; ++i)
+		{
+			_users[i].addMessage(from, to, message);
+		}
 
-	user_ptr->addMessage(from, to, message);
+	}
+	else
+	{
+		User* user_ptr = getUserByName(to);
+		user_ptr->addMessage(from, to, message);
+	}
+	
 
 }
 
@@ -151,6 +155,7 @@ void Program::login()
 
 void Program::mainMenu()
 {
+	system("cls");
 	int key;
 	
 	cout << "Choose option:  " << endl << "1 - Registration " << endl << "2 - Login" << endl << "0 - Quit" << endl << endl;
@@ -159,20 +164,28 @@ void Program::mainMenu()
 	switch (key)
 	{
 	case 0:
+		
 		setStatusOFF();
 		_currentUser = nullptr;
 		break;
+		system("cls");
 
 	case 1:
+		system("cls");
 		registration();
 		break;
+		
 
 	case 2:
+		system("cls");
 		login();
 		break;
 
 	default:
+		system("cls");
 		cout << "You chose wrong option, try again" << endl << endl;
+		system("pause");
+		system("cls");
 
 		break;
 	}
@@ -183,24 +196,26 @@ void Program::mainMenu()
 
 void Program::userMenu()
 {
+	system("cls");
 	int key = 0;
 	int userIndex = 0;
 
 	string message, from, to;
 
-	cout << "0 - Quit" << endl << "1 - add message to " << endl << "2 - show chat" << endl << endl;
+	cout << "Choose option:  "  << endl << "1 - add message to " << endl << "2 - show chat" << endl  << "3 - show all users" << endl << "0 - Quit" << endl << endl;
 
 	cin >> key;
 
 	switch (key)
 	{
 	case 0:
-		
+		system("cls");
 		_currentUser = nullptr;
 		break;
 
 	case 1:
 		
+		system("cls");
 		cout << "To (name): " << endl;
 		cin >> to;
 		cout << endl;
@@ -209,7 +224,7 @@ void Program::userMenu()
 		cin >> message;
 		cout << endl;
 
-		if (getUserByName(to))
+		if (getUserByName(to) || to == "all")
 		{
 			addMessage(to, message);
 			break;
@@ -219,16 +234,35 @@ void Program::userMenu()
 			cout << "This user is not exist, try again" << endl << endl;
 			break;
 		}
+		system("cls");
 		
 
 	case 2:
+		system("cls");
+
 		_currentUser->print();
+
+		system("pause");
+		system("cls");
+		break;
+
+	case 3:
+		system("cls");
+
+		printUsers();
+
+		system("pause");
+		system("cls");
 		break;
 
 	default:
 
+		system("cls");
+
 		cout << "You chose wrong option, try again" << endl << endl;
 
+		system("pause");
+		system("cls");
 		break;
 	}
 }
@@ -236,7 +270,7 @@ void Program::userMenu()
 	{
 		User new_user;
 
-		User* n_d2 = new User[_programLength + 1];
+		User* (n_d2) = new User[_programLength + 1];
 
 		for (int i = 0; i < _programLength; ++i)
 		{
@@ -250,30 +284,9 @@ void Program::userMenu()
 		++_programLength;
 
 }
-
-	                                                                    //manual
-
-	void Program::registrationM(string log, string pas, string name)
-	{
-		
-		addUser();
-		setUser(log, pas, name, _programLength - 1);
-
-		cout << "User successfully created  " << endl << endl;
-
-	}
-
-	void Program::loginM(string login)
-	{
-		_currentUser = getUserByLogin(login);
-		
-		cout << "Current User is:  " << endl;
-		_currentUser->printUser();
-		cout << endl;
-	}
-
+                                   
 	void Program::addMessageM(string from, string to, string message, int index)
-	{	
+	{
 		_users[index].addMessage(from, to, message);
 
 	}

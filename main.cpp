@@ -1,18 +1,8 @@
-#include "Message.h"
-#include "Chat.h"
-#include "User.h"
-#include <iostream>
-#include <string>
 #include "Program.h"
-
-using namespace std;
-
-
-
 
 int main()
 {
-	//66
+	
 	Program p1;
 
 	p1.setUser("LOG1", "1", "NAME1", 0);

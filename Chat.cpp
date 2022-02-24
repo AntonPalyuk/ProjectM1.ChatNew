@@ -1,10 +1,14 @@
 #include "Chat.h"
 
-Chat::Chat()
-{
-	_messages = new Message[_length];
+														//Конструторы
 
+Chat::Chat()
+{                                         // Изначально хотели добавить функцию создания
+	_messages = new Message[_length];     //	новых чатов (например приватных), но не успели 
+	                                      //	поэтому остался просто массив из одного элемента
 }
+
+														//Функционал
 
 void Chat::addMessage(string from, string to, string message)
 {
